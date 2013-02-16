@@ -1,0 +1,26 @@
+{% run title="User Management" %}
+{% include /global/header.html %}
+<style>
+    input[type=submit] {
+        margin-top: 10px;
+    }
+</style>
+<form enctype="multipart/form-data" method="POST" novalidate>
+    {% run results = [] %}
+    {% for teacher in teachers %}
+        {% run options="" %}
+        {% for item in [(3,"Unauthenticated"), (4,"Teacher"), (5, "Admin")] %}
+            {% run options += "<option value={}{}>{}</option>".format(item[0], " selected"*(teacher.state==item[0]), item[1])  %}
+        {% end for %}
+        {% run results.append([teacher.email, teacher.first, teacher.last, """<select name='level{id}'>{options}</select>""".format(id=teacher.id, options=options)]) %}
+    {% end for %}
+    {{ table("Teachers", "There are no users.", [
+            ["Email", ["sortable:alphanumeric"]],
+            ["First Name", ["sortable:alphanumeric"]],
+            ["Surname", ["sortable:alphanumeric"]],
+            ["Authentication", ["sortable:alphanumeric"]]
+    ], results, classes=["autosort"]) }}
+    <input type="submit" value="Save Changes">
+</form>
+
+{% include /global/footer.html %}
