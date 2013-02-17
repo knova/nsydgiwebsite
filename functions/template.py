@@ -1,4 +1,4 @@
-#from functions.users import get_user
+from functions.users import get_user
 from html import escape
 from functions.form import form
 from functions.table import table

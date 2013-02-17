@@ -7,7 +7,10 @@ from .runnode import RunNode
 
 import re
 from functions.template import makecontext
-TEMPLATE_DIR = __file__[::-1].split("/", 1)[1][::-1] + "/templates/"
+if "/" in __file__:
+    TEMPLATE_DIR = __file__[::-1].split("/", 2)[2][::-1] + "/templates/"
+else:
+    TEMPLATE_DIR = __file__[::-1].split("\\", 2)[2][::-1] + "\\templates\\"
 
 def render(filename, response, context=None):
     context = makecontext(context, response)
